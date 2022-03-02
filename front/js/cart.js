@@ -5,11 +5,11 @@ const positionEmptyCart = document.querySelector("#cart__items");
 
 // Si le panier est vide
 function getCart(){
-if (produitLocalStorage === null || produitLocalStorage === 0) {
-    const emptyCart = `<p>Votre panier est vide</p>`;
-    positionEmptyCart.innerHTML = emptyCart;
+if (produitLocalStorage === null) {
+    positionEmptyCart.textContent = "Votre panier est vide";
 } else {
 for (let produit in produitLocalStorage){
+
     // Insertion de l'élément "article"
     let productArticle = document.createElement("article");
     document.querySelector("#cart__items").appendChild(productArticle);
@@ -175,7 +175,7 @@ function formInit() {
    //Création des expressions régulières
    let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
    let charRegExp = new RegExp("^[a-zA-Z ,.'-]+$");
-   let addressRegExp = new RegExp("^[a-zA-Z0-9\s\,\''\\ \\'\-]*$");
+   let addressRegExp = new RegExp("^[a-zA-Z0-9\s\,\''\\ \\'\\()\-]*$");
 
    // Ecoute de la modification du prénom
    form.firstName.addEventListener('change', firstNameValidate);
@@ -234,14 +234,12 @@ function formInit() {
    }
 }
 formInit();
-
-
-
+//Envoi des informations client au localstorage
 function postForm(){
-    const btnCommander = document.getElementById("order");
+    const btn_commander = document.getElementById("order");
 
     //Ecouter le panier
-    btnCommander.addEventListener("click", (event)=>{
+    btn_commander.addEventListener("click", (event)=>{
     
         //Récupération des coordonnées du formulaire client
         let inputName = document.getElementById('firstName');
@@ -283,6 +281,7 @@ function postForm(){
             console.log(data);
             localStorage.clear();
             localStorage.setItem("orderId", data.orderId);
+            
 
             document.location.href = "confirmation.html";
         })
@@ -295,7 +294,9 @@ postForm();
 
 
 
-       
-        
+
+   
 
 
+    
+    
