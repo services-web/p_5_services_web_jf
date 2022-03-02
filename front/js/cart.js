@@ -93,10 +93,9 @@ function getTotals(){
 
     // Récupération du total des quantités
     var elemsQtt = document.getElementsByClassName('itemQuantity');
-    var myLength = elemsQtt.length,
     totalQtt = 0;
 
-    for (var i = 0; i < myLength; ++i) {
+    for (var i = 0; i < elemsQtt.length; ++i) {
         totalQtt += elemsQtt[i].valueAsNumber;
     }
 
@@ -107,7 +106,7 @@ function getTotals(){
     // Récupération du prix total
     totalPrice = 0;
 
-    for (var i = 0; i < myLength; ++i) {
+    for (var i = 0; i < elemsQtt.length; ++i) {
         totalPrice += (elemsQtt[i].valueAsNumber * produitLocalStorage[i].prixProduit);
     }
 
@@ -143,7 +142,29 @@ function modifyQtt() {
 }
 modifyQtt();
 
+// Suppression d'un produit
+function deleteProduct() {
+    let btnSupprimer = document.querySelectorAll(".deleteItem");
 
+    for (let j = 0; j < btnSupprimer.length; j++){
+        btnSupprimer[j].addEventListener("click" , (event) => {
+            event.preventDefault();
+
+            //Selection de l'element à supprimer en fonction de son id ET sa couleur
+            let idDelete = produitLocalStorage[j].idProduit;
+            let colorDelete = produitLocalStorage[j].couleurProduit;
+
+            produitLocalStorage = produitLocalStorage.filter( el => el.idProduit !== idDelete || el.couleurProduit !== colorDelete );
+            
+            localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
+
+            //Alerte produit supprimé et refresh
+            alert("Ce produit a bien été supprimé du panier");
+            location.reload();
+        })
+    }
+}
+deleteProduct();
 
 
 //Instauration formulaire avec regex
@@ -215,6 +236,62 @@ function formInit() {
 formInit();
 
 
+
+function postForm(){
+    const btnCommander = document.getElementById("order");
+
+    //Ecouter le panier
+    btnCommander.addEventListener("click", (event)=>{
+    
+        //Récupération des coordonnées du formulaire client
+        let inputName = document.getElementById('firstName');
+        let inputLastName = document.getElementById('lastName');
+        let inputAdress = document.getElementById('address');
+        let inputCity = document.getElementById('city');
+        let inputMail = document.getElementById('email');
+
+        //Construction d'un array depuis le local storage
+        let idProducts = [];
+        for (let i = 0; i<produitLocalStorage.length;i++) {
+            idProducts.push(produitLocalStorage[i].idProduit);
+        }
+        console.log(idProducts);
+
+        const order = {
+            contact : {
+                firstName: inputName.value,
+                lastName: inputLastName.value,
+                address: inputAdress.value,
+                city: inputCity.value,
+                email: inputMail.value,
+            },
+            products: idProducts,
+        } 
+
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(order),
+            headers: {
+                'Accept': 'application/json', 
+                "Content-Type": "application/json" 
+            },
+        };
+
+        fetch("http://localhost:3000/api/products/order", options)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            localStorage.clear();
+            localStorage.setItem("orderId", data.orderId);
+
+            document.location.href = "confirmation.html";
+        })
+        .catch((err) => {
+            alert ("Problème avec fetch : " + err.message);
+        });
+        })
+}
+postForm();
 
 
 
