@@ -1,19 +1,23 @@
+//récupérer l’id du produit ayant été cliqué sur la page d’accueil.
+//récupérer l’id du produit en question dans l’URL (URLSearchParams).
 
-var url = new URL(window.location.href);
-var idProduct = url.searchParams.get("id");
+let idProduct = new URL(window.location.href).searchParams.get("id");
 console.log(idProduct);
 let article = "";
 
-const colorPicked = document. querySelector("#colors");
-const quantityPicked = document.querySelector("#quantity");
+const couleurChoisie = document. querySelector("#colors");
+const quantitéChoisie = document.querySelector("#quantity");
 
-getArticle();
+requeteApiId();
 
 // Récupération des articles de l'API
-function getArticle() {
+//Nous avons maintenant l’id du produit à afficher, 
+//ceci permettant de requêter l’API dans le but de récupérer 
+//les différentes informations du produit en question.
+function requeteApiId() {
     fetch("http://localhost:3000/api/products/" + idProduct)
-    .then((res) => {
-        return res.json();
+    .then((response) => {
+        return response.json();
     })
 
     // Répartition des données de l'API dans le DOM
@@ -21,18 +25,20 @@ function getArticle() {
         article = await resultatAPI;
         console.table(article);
         if (article){
-            getPost(article);
+            insererArticle(article);
         }
     })
     .catch((error) => {
         console.log("Erreur de la requête API");
     })
 }
-    
-function getPost(article){
+//Insérer ces détails dans la page Produit (dans le DOM).
+function insererArticle(article){
+
     // Insertion de l'image
     let productImg = document.createElement("img");
     document.querySelector(".item__img").appendChild(productImg);
+//insertion des attributs image
     productImg.src = article.imageUrl;
     productImg.alt = article.altTxt;
 
@@ -56,22 +62,22 @@ function getPost(article){
         productColors.value = colors;
         productColors.innerHTML = colors;
     }
-    addToCart(article);
+    ajoutPanier(article);
 }
 
 //Gestion du panier
-function addToCart(article) {
-    const btn_envoyerPanier = document.querySelector("#addToCart");
+function ajoutPanier(article) {
+    const btnEnvoyer = document.querySelector("#addToCart");
 
     //Ecouter le panier avec 2 conditions couleur non nulle et quantité entre 1 et 100
-    btn_envoyerPanier.addEventListener("click", (event)=>{
-        if (quantityPicked.value > 0 && quantityPicked.value <=100 && quantityPicked.value != 0){
+    btnEnvoyer.addEventListener("click", (event)=>{
+        if (quantitéChoisie.value > 0 && quantitéChoisie.value <=100){
 
     //Recupération du choix de la couleur
-    let choixCouleur = colorPicked.value;
+    let choixCouleur = couleurChoisie.value;
                 
     //Recupération du choix de la quantité
-    let choixQuantite = quantityPicked.value;
+    let choixQuantite = quantitéChoisie.value;
 
     //Récupération des options de l'article à ajouter au panier
     let optionsProduit = {
@@ -83,21 +89,21 @@ function addToCart(article) {
         descriptionProduit: article.description,
         imgProduit: article.imageUrl,
         altImgProduit: article.altTxt
-    };
+    }
 
     //Initialisation du local storage
     let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
 
     //fenêtre pop-up
     const popupConfirmation =() =>{
-        if(window.confirm(`Votre commande de ${choixQuantite} ${article.name} ${choixCouleur} est ajoutée au panier
-Pour consulter votre panier, cliquez sur OK`)){
+        if(window.confirm('Votre commande de ' + article.name + ' ' + choixQuantite + ' ' + choixCouleur + ' , cliquez sur OK pour valider')){
            
         }
     }
 
     //Importation dans le local storage
     //Si le panier comporte déjà au moins 1 article
+
     if (produitLocalStorage) {
     let resultFind = produitLocalStorage.find(
         (el) => el.idProduit === idProduct && el.couleurProduit === choixCouleur);

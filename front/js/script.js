@@ -1,23 +1,63 @@
-fillSection();
+InsérerProduits();
 
 // Récupération des articles de l'API
+// requêter l’API pour lui demander l’ensemble des produits
 async function getArticles() {
     var articlesCatch = await fetch("http://localhost:3000/api/products")
     return await articlesCatch.json();
 }
 
-    // Répartition des données de l'API dans le DOM
-async function fillSection() {
+// Étape 3 : Insérer les produits dans la page d’accueil
+
+async function InsérerProduits() {
     var result = await getArticles ()
+//récupérer la réponse émise
+
+/*L'API Promise propose ce qui suit :
+
+Chaque tâche asynchrone renverra un promise objet.
+Chaque promiseo bjet aura une then fonction qui peut prendre deux arguments, 
+un success gestionnaire et un errorgestionnaire.
+Le gestionnaire de réussite ou d'erreur dans la thenfonction ne sera appelé qu'une seule fois , 
+après la fin de la tâche asynchrone.
+La thenfonction renverra également un promise, pour permettre le chaînage de plusieurs appels.
+Chaque gestionnaire (succès ou erreur) peut renvoyer un value, 
+qui sera passé à la fonction suivante en tant que argument, dans la chaîne de promises.
+Si un gestionnaire renvoie un promise(fait une autre requête asynchrone),
+ le prochain gestionnaire (succès ou erreur) ne sera appelé qu'une fois cette requête terminée.
+Ainsi, l'exemple de code précédent pourrait se traduire par quelque chose comme ce qui suit,
+ en utilisant des promesses et le $httpservice (dans AngularJs) :
+
+$http.get('/api/server-config').then(
+    function(configResponse) {
+        return $http.get('/api/' + configResponse.data.USER_END_POINT);
+    }
+).then(
+    function(userResponse) {
+        return $http.get('/api/' + userResponse.data.id + '/items');
+    }
+).then(
+    function(itemResponse) {
+        // Display items here
+    }, 
+    function(error) {
+        // Common error handling
+    }
+);*/
     .then(function (resultatAPI){
         const articles = resultatAPI;
         console.table(articles);
+
+
+//parcourir celle-ci pour insérer chaque élément (chaque produit) dans la page d’accueil (dans le DOM).
         for (let article in articles) {
 
             // Insertion de l'élément "a"
             let productLink = document.createElement("a");
             document.querySelector(".items").appendChild(productLink);
-            productLink.href = `product.html?id=${resultatAPI[article]._id}`;
+//paramétrer la balise “a” et son attribut “href”.
+            productLink.href = "product.html?id=" + resultatAPI[article]._id;
+           
 
             // Insertion de l'élément "article"
             let productArticle = document.createElement("article");
