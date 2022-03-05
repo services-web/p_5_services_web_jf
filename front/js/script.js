@@ -3,7 +3,7 @@ InsérerProduits();
 // Récupération des articles de l'API
 // requêter l’API pour lui demander l’ensemble des produits
 async function getArticles() {
-    var articlesCatch = await fetch("http://localhost:3000/api/products")
+    let articlesCatch = await fetch("http://localhost:3000/api/products")
     return await articlesCatch.json();
 }
 

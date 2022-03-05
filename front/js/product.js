@@ -3,6 +3,7 @@
 
 let idProduct = new URL(window.location.href).searchParams.get("id");
 console.log(idProduct);
+
 let article = "";
 
 const couleurChoisie = document. querySelector("#colors");
@@ -62,6 +63,7 @@ function insererArticle(article){
         productColors.value = colors;
         productColors.innerHTML = colors;
     }
+    
     ajoutPanier(article);
 }
 

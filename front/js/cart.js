@@ -1,12 +1,12 @@
 //Initialisation du local storage
 let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
 console.table(produitLocalStorage);
-const positionEmptyCart = document.querySelector("#cart__items");
+const panierVide = document.querySelector("#cart__items");
 
 // Si le panier est vide
 function getCart(){
 if (produitLocalStorage === null) {
-    positionEmptyCart.textContent = "Votre panier est vide";
+    panierVide.textContent = "Votre panier est vide";
 } else {
 for (let produit in produitLocalStorage){
 
