@@ -10,7 +10,7 @@ async function getArticles() {
 // Étape 3 : Insérer les produits dans la page d’accueil
 
 async function InsérerProduits() {
-    var result = await getArticles ()
+    let result = await getArticles ()
 //récupérer la réponse émise
 
 /*L'API Promise propose ce qui suit :
