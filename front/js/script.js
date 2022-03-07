@@ -1,4 +1,3 @@
-InsérerProduits();
 
 // Récupération des articles de l'API
 // requêter l’API pour lui demander l’ensemble des produits
@@ -6,6 +5,9 @@ async function getArticles() {
     let articlesCatch = await fetch("http://localhost:3000/api/products")
     return await articlesCatch.json();
 }
+
+
+InsérerProduits();
 
 // Étape 3 : Insérer les produits dans la page d’accueil
 
