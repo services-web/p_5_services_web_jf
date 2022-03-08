@@ -6,7 +6,6 @@ async function getArticles() {
     return await articlesCatch.json();
 }
 
-
 InsérerProduits();
 
 // Étape 3 : Insérer les produits dans la page d’accueil
