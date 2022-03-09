@@ -1,4 +1,3 @@
-//récupérer l’id du produit ayant été cliqué sur la page d’accueil.
 //récupérer l’id du produit en question dans l’URL (URLSearchParams).
 
 let idProduct = new URL(window.location.href).searchParams.get("id");
@@ -11,17 +10,14 @@ const quantitéChoisie = document.querySelector("#quantity");
 
 requeteApiId();
 
-// Récupération des articles de l'API
-//Nous avons maintenant l’id du produit à afficher, 
-//ceci permettant de requêter l’API dans le but de récupérer 
-//les différentes informations du produit en question.
+// Récupération des articles de l'API grace a l'ID du produit a afficher
 function requeteApiId() {
     fetch("http://localhost:3000/api/products/" + idProduct)
     .then((response) => {
         return response.json();
     })
 
-    // Répartition des données de l'API dans le DOM
+    //promise stocké dans une variable
     .then(async function (resultatAPI) {
         article = await resultatAPI;
         console.table(article);

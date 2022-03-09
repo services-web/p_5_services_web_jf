@@ -265,24 +265,7 @@ function postForm(){
             },
             products: idProducts,
         } 
-/*Requête JavaScript POST avec Fetch API
-const response = await fetch("https://reqbin.com/echo/post/json", {
-method: 'POST',
-headers: {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json'
-},
-body: `{
-   "Id": 78912,
-   "Customer": "Jason Sweet",
-   "Quantity": 1,
-   "Price": 18.00
-  }`,
-});
-
-response.json().then(data => {
-  console.log(data);
-});*/
+/*requête POST sur l’API et récupérer l’identifiant de commande dans la réponse de celle-ci.*/
         const options = {
             method: 'POST',
             body: JSON.stringify(order),
