@@ -95,7 +95,7 @@ function ajoutPanier(article) {
             //fenêtre pop-up
             const popupConfirmation = () => {
                 if (window.confirm('Votre commande de ' + article.name + ' ' + choixQuantite + ' ' + choixCouleur + ' , cliquez sur OK pour valider')) {
-
+                   
                 }
             }
 
