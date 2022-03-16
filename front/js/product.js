@@ -89,13 +89,13 @@ function ajoutPanier(article) {
                 altImgProduit: article.altTxt
             }
 
-            //Initialisation du local storage
+            //Initialisation du local storage 
             let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
 
             //fenêtre pop-up
             const popupConfirmation = () => {
                 if (window.confirm('Votre commande de ' + article.name + ' ' + choixQuantite + ' ' + choixCouleur + ' , cliquez sur OK pour valider')) {
-                   
+                 window.location.href = "/front/html/cart.html";  
                 }
             }
 

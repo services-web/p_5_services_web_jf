@@ -4,7 +4,7 @@ console.table(produitLocalStorage);
 const panierVide = document.querySelector("#cart__items");
 
 // Si le panier est vide
-function getCart() {
+function articlePanier() {
     if (produitLocalStorage === null) {
         panierVide.textContent = "Votre panier est vide";
     } else {
@@ -88,15 +88,15 @@ function getCart() {
         }
     }
 }
-getCart();
+articlePanier();
 
-function getTotals() {
+function totalPanier() {
 
     // Récupération du total des quantités
-    var elemsQtt = document.getElementsByClassName('itemQuantity');
+    let elemsQtt = document.getElementsByClassName('itemQuantity');
     totalQtt = 0;
 
-    for (var i = 0; i < elemsQtt.length; ++i) {
+    for (let i = 0; i < elemsQtt.length; ++i) {
         totalQtt += elemsQtt[i].valueAsNumber;
     }
 
@@ -105,46 +105,45 @@ function getTotals() {
     console.log(totalQtt);
 
     // Récupération du prix total
-    totalPrice = 0;
+    totalPrix = 0;
 
     for (var i = 0; i < elemsQtt.length; ++i) {
-        totalPrice += (elemsQtt[i].valueAsNumber * produitLocalStorage[i].prixProduit);
+        totalPrix += (elemsQtt[i].valueAsNumber * produitLocalStorage[i].prixProduit);
     }
 
     let productTotalPrice = document.getElementById('totalPrice');
-    productTotalPrice.innerHTML = totalPrice;
-    console.log(totalPrice);
+    productTotalPrice.innerHTML = totalPrix;
+    console.log(totalPrix);
 }
-getTotals();
+totalPanier();
 
 // Modification d'une quantité de produit
-function modifyQtt() {
-    let qttModif = document.querySelectorAll(".itemQuantity");
 
-    for (let k = 0; k < qttModif.length; k++) {
-        qttModif[k].addEventListener("change", (event) => {
+    let qttModifié = document.querySelectorAll(".itemQuantity");
+
+    for (let j = 0; j < qttModifié.length; j++) {
+        qttModifié[j].addEventListener("change", (event) => {
             event.preventDefault();
 
             //Selection de l'element à modifier en fonction de son id ET sa couleur
-            let quantityModif = produitLocalStorage[k].quantiteProduit;
-            let qttModifValue = qttModif[k].valueAsNumber;
+            let quantityModif = produitLocalStorage[j].quantiteProduit;
+            let qttModifieValue = qttModifié[j].valueAsNumber;
 
-            const resultFind = produitLocalStorage.find((el) => el.qttModifValue !== quantityModif);
+            const resultFind = produitLocalStorage.find((el) => el.qttModifieValue !== quantityModif);
 
-            resultFind.quantiteProduit = qttModifValue;
-            produitLocalStorage[k].quantiteProduit = resultFind.quantiteProduit;
+            resultFind.quantiteProduit = qttModifieValue;
+            produitLocalStorage[j].quantiteProduit = resultFind.quantiteProduit;
 
             localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
 
             // refresh rapide
-            location.reload();
+            window.location.reload();
         })
     }
-}
-modifyQtt();
+
 
 // Suppression d'un produit
-function deleteProduct() {
+
     let btnSupprimer = document.querySelectorAll(".deleteItem");
 
     for (let j = 0; j < btnSupprimer.length; j++) {
@@ -161,15 +160,14 @@ function deleteProduct() {
 
             //Alerte produit supprimé et refresh
             alert("Ce produit a bien été supprimé du panier");
-            location.reload();
+            window.location.reload();
         })
     }
-}
-deleteProduct();
+
 
 
 //Instauration formulaire avec regex
-function formInit() {
+function formulaireInitialisation() {
     // Ajout des Regex
     let form = document.querySelector(".cart__order__form");
 
@@ -234,21 +232,24 @@ function formInit() {
         }
     }
 }
-formInit();
+formulaireInitialisation();
+
 //Envoi des informations client au localstorage
 function postForm() {
-    const btn_commander = document.getElementById("order");
+    const bouttonCommander = document.getElementById("order");
 
     //Ecouter le panier
-    btn_commander.addEventListener("click", (event) => {
+    bouttonCommander.addEventListener("click", (event) => {
 
         //Récupération des coordonnées du formulaire client
-        let inputName = document.getElementById('firstName');
-        let inputLastName = document.getElementById('lastName');
-        let inputAdress = document.getElementById('address');
-        let inputCity = document.getElementById('city');
-        let inputMail = document.getElementById('email');
+        let valueNom = document.getElementById('firstName');
+        let valuePrenom = document.getElementById('lastName');
+        let valueAdress = document.getElementById('address');
+        let valueVille = document.getElementById('city');
+        let valueMail = document.getElementById('email');
 
+
+        
         //Construction d'un array depuis le local storage
         let idProducts = [];
         for (let i = 0; i < produitLocalStorage.length; i++) {
@@ -258,11 +259,11 @@ function postForm() {
 
         const order = {
             contact: {
-                firstName: inputName.value,
-                lastName: inputLastName.value,
-                address: inputAdress.value,
-                city: inputCity.value,
-                email: inputMail.value,
+                firstName: valueNom.value,
+                lastName: valuePrenom.value,
+                address: valueAdress.value,
+                city: valueVille.value,
+                email: valueMail.value,
             },
             products: idProducts,
         }

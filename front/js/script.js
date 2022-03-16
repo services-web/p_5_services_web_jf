@@ -2,20 +2,19 @@
 // requêter l’API pour lui demander l’ensemble des produits
 async function getArticles() {
     let articlesCatch = await fetch("http://localhost:3000/api/products")
-    return await articlesCatch.json();
+    return articlesCatch.json();
 }
 
 InsérerProduits();
 
 // Étape 3 : Insérer les produits dans la page d’accueil
 
-async function InsérerProduits() {
-    let result = await getArticles()
+ function InsérerProduits() {
+    let result =  getArticles()
 
         //récupérer la réponse émise
-        .then(function (resultatAPI) {
-            const articles = resultatAPI;
-            console.table(articles);
+        .then(function (articles) {
+        console.table(articles);
 
 
             //parcourir celle-ci pour insérer chaque élément (chaque produit) dans la page d’accueil (dans le DOM).
@@ -25,7 +24,7 @@ async function InsérerProduits() {
                 let productLink = document.createElement("a");
                 document.querySelector(".items").appendChild(productLink);
                 //paramétrer la balise “a” et son attribut “href”.
-                productLink.href = "product.html?id=" + resultatAPI[article]._id;
+                productLink.href = "product.html?id=" + articles[article]._id;
 
 
                 // Insertion de l'élément "article"
@@ -35,20 +34,20 @@ async function InsérerProduits() {
                 // Insertion de l'image
                 let productImg = document.createElement("img");
                 productArticle.appendChild(productImg);
-                productImg.src = resultatAPI[article].imageUrl;
-                productImg.alt = resultatAPI[article].altTxt;
+                productImg.src = articles[article].imageUrl;
+                productImg.alt = articles[article].altTxt;
 
                 // Insertion du titre "h3"
                 let productName = document.createElement("h3");
                 productArticle.appendChild(productName);
                 productName.classList.add("productName");
-                productName.innerHTML = resultatAPI[article].name;
+                productName.innerHTML = articles[article].name;
 
                 // Insertion de la description "p"
                 let productDescription = document.createElement("p");
                 productArticle.appendChild(productDescription);
                 productDescription.classList.add("productName");
-                productDescription.innerHTML = resultatAPI[article].description;
+                productDescription.innerHTML = articles[article].description;
             }
         })
         .catch(function (error) {
