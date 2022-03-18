@@ -5,7 +5,7 @@ async function getArticles() {
     return articlesCatch.json();
 }
 
-InsérerProduits();
+
 
 // Étape 3 : Insérer les produits dans la page d’accueil
 
@@ -54,3 +54,4 @@ InsérerProduits();
             return error;
         });
 }
+InsérerProduits();

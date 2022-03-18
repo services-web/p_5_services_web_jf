@@ -1,94 +1,95 @@
 //Initialisation du local storage
 let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
 console.table(produitLocalStorage);
-const panierVide = document.querySelector("#cart__items");
+
 
 // Si le panier est vide
-function articlePanier() {
+
     if (produitLocalStorage === null) {
+        const panierVide = document.querySelector("#cart__items");
         panierVide.textContent = "Votre panier est vide";
     } else {
         for (let produit in produitLocalStorage) {
 
             // Insertion de l'élément "article"
-            let productArticle = document.createElement("article");
-            document.querySelector("#cart__items").appendChild(productArticle);
-            productArticle.className = "cart__item";
-            productArticle.setAttribute('data-id', produitLocalStorage[produit].idProduit);
+            let detailsProduit = document.createElement("article");
+            document.querySelector("#cart__items").appendChild(detailsProduit);
+            detailsProduit.className = "cart__item";
+            detailsProduit.setAttribute('data-id', produitLocalStorage[produit].idProduit);
 
             // Insertion de l'élément "div"
-            let productDivImg = document.createElement("div");
-            productArticle.appendChild(productDivImg);
-            productDivImg.className = "cart__item__img";
+            let imageProduit = document.createElement("div");
+            detailsProduit.appendChild(imageProduit);
+            imageProduit.className = "cart__item__img";
 
             // Insertion de l'image
-            let productImg = document.createElement("img");
-            productDivImg.appendChild(productImg);
-            productImg.src = produitLocalStorage[produit].imgProduit;
-            productImg.alt = produitLocalStorage[produit].altImgProduit;
+            let imageEtAttribut = document.createElement("img");
+            imageProduit.appendChild(imageEtAttribut);
+            imageEtAttribut.src = produitLocalStorage[produit].imgProduit;
+            imageEtAttribut.alt = produitLocalStorage[produit].altImgProduit;
 
             // Insertion de l'élément "div"
-            let productItemContent = document.createElement("div");
-            productArticle.appendChild(productItemContent);
-            productItemContent.className = "cart__item__content";
+            let conteneurProduitDiv = document.createElement("div");
+            detailsProduit.appendChild(conteneurProduitDiv);
+            conteneurProduitDiv.className = "cart__item__content";
 
             // Insertion de l'élément "div"
-            let productItemContentTitlePrice = document.createElement("div");
-            productItemContent.appendChild(productItemContentTitlePrice);
-            productItemContentTitlePrice.className = "cart__item__content__titlePrice";
+            let conteneurProduitDivPrix = document.createElement("div");
+            conteneurProduitDiv.appendChild(conteneurProduitDivPrix);
+            conteneurProduitDivPrix.className = "cart__item__content__titlePrice";
 
             // Insertion du titre h3
-            let productTitle = document.createElement("h2");
-            productItemContentTitlePrice.appendChild(productTitle);
-            productTitle.innerHTML = produitLocalStorage[produit].nomProduit;
+            let titreProduit = document.createElement("h2");
+            conteneurProduitDivPrix.appendChild(titreProduit);
+            titreProduit.innerHTML = produitLocalStorage[produit].nomProduit;
 
             // Insertion de la couleur
-            let productColor = document.createElement("p");
-            productTitle.appendChild(productColor);
-            productColor.innerHTML = produitLocalStorage[produit].couleurProduit;
+            let couleurProduit = document.createElement("p");
+            titreProduit.appendChild(couleurProduit);
+            couleurProduit.innerHTML = produitLocalStorage[produit].couleurProduit;
 
             // Insertion du prix
-            let productPrice = document.createElement("p");
-            productItemContentTitlePrice.appendChild(productPrice);
-            productPrice.innerHTML = produitLocalStorage[produit].prixProduit + " €";
+            let prixProduit = document.createElement("p");
+            conteneurProduitDivPrix.appendChild(prixProduit);
+            prixProduit.innerHTML = produitLocalStorage[produit].prixProduit + " €";
 
             // Insertion de l'élément "div"
-            let productItemContentSettings = document.createElement("div");
-            productItemContent.appendChild(productItemContentSettings);
-            productItemContentSettings.className = "cart__item__content__settings";
+            let conteneurProduitDivSettings = document.createElement("div");
+            conteneurProduitDiv.appendChild(conteneurProduitDivSettings);
+            conteneurProduitDivSettings.className = "cart__item__content__settings";
 
             // Insertion de l'élément "div"
-            let productItemContentSettingsQuantity = document.createElement("div");
-            productItemContentSettings.appendChild(productItemContentSettingsQuantity);
-            productItemContentSettingsQuantity.className = "cart__item__content__settings__quantity";
+            let conteneurProduitDivSettingsQuantity = document.createElement("div");
+            conteneurProduitDivSettings.appendChild(conteneurProduitDivSettingsQuantity);
+            conteneurProduitDivSettingsQuantity.className = "cart__item__content__settings__quantity";
 
             // Insertion de "Qté : "
-            let productQte = document.createElement("p");
-            productItemContentSettingsQuantity.appendChild(productQte);
-            productQte.innerHTML = "Quantité : ";
+            let qteProduit = document.createElement("p");
+            conteneurProduitDivSettingsQuantity.appendChild(qteProduit);
+            qteProduit.innerHTML = "Quantité : ";
 
             // Insertion de la quantité
-            let productQuantity = document.createElement("input");
-            productItemContentSettingsQuantity.appendChild(productQuantity);
-            productQuantity.value = produitLocalStorage[produit].quantiteProduit;
-            productQuantity.className = "itemQuantity";
-            productQuantity.setAttribute("type", "number");
+            let quantiteProduit = document.createElement("input");
+            conteneurProduitDivSettingsQuantity.appendChild(quantiteProduit);
+            quantiteProduit.value = produitLocalStorage[produit].quantiteProduit;
+            quantiteProduit.className = "itemQuantity";
+            quantiteProduit.setAttribute("type", "number");
 
 
             // Insertion de l'élément "div"
-            let productItemContentSettingsDelete = document.createElement("div");
-            productItemContentSettings.appendChild(productItemContentSettingsDelete);
-            productItemContentSettingsDelete.className = "cart__item__content__settings__delete";
+            let conteneurProduitDivSettingsDelete = document.createElement("div");
+            conteneurProduitDivSettings.appendChild(conteneurProduitDivSettingsDelete);
+            conteneurProduitDivSettingsDelete.className = "cart__item__content__settings__delete";
 
             // Insertion de "p" supprimer
             let productSupprimer = document.createElement("p");
-            productItemContentSettingsDelete.appendChild(productSupprimer);
+            conteneurProduitDivSettingsDelete.appendChild(productSupprimer);
             productSupprimer.className = "deleteItem";
             productSupprimer.innerHTML = "Supprimer";
         }
     }
-}
-articlePanier();
+
+
 
 function totalPanier() {
 
@@ -100,8 +101,8 @@ function totalPanier() {
         totalQtt += elemsQtt[i].valueAsNumber;
     }
 
-    let productTotalQuantity = document.getElementById('totalQuantity');
-    productTotalQuantity.innerHTML = totalQtt;
+    let quantiteTotal = document.getElementById('totalQuantity');
+    quantiteTotal.innerHTML = totalQtt;
     console.log(totalQtt);
 
     // Récupération du prix total
@@ -111,8 +112,8 @@ function totalPanier() {
         totalPrix += (elemsQtt[i].valueAsNumber * produitLocalStorage[i].prixProduit);
     }
 
-    let productTotalPrice = document.getElementById('totalPrice');
-    productTotalPrice.innerHTML = totalPrix;
+    let productTotalPrix = document.getElementById('totalPrice');
+    productTotalPrix.innerHTML = totalPrix;
     console.log(totalPrix);
 }
 totalPanier();
@@ -126,13 +127,13 @@ totalPanier();
             event.preventDefault();
 
             //Selection de l'element à modifier en fonction de son id ET sa couleur
-            let quantityModif = produitLocalStorage[j].quantiteProduit;
+            let quantiteModifie = produitLocalStorage[j].quantiteProduit;
             let qttModifieValue = qttModifié[j].valueAsNumber;
 
-            const resultFind = produitLocalStorage.find((el) => el.qttModifieValue !== quantityModif);
+            let resultatTrouve = produitLocalStorage.find((condition) => condition.qttModifieValue !== quantiteModifie);
 
-            resultFind.quantiteProduit = qttModifieValue;
-            produitLocalStorage[j].quantiteProduit = resultFind.quantiteProduit;
+            resultatTrouve.quantiteProduit = qttModifieValue;
+            produitLocalStorage[j].quantiteProduit = resultatTrouve.quantiteProduit;
 
             localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
 
@@ -146,15 +147,15 @@ totalPanier();
 
     let btnSupprimer = document.querySelectorAll(".deleteItem");
 
-    for (let j = 0; j < btnSupprimer.length; j++) {
-        btnSupprimer[j].addEventListener("click", (event) => {
+    for (let k = 0; k < btnSupprimer.length; k++) {
+        btnSupprimer[k].addEventListener("click", (event) => {
             event.preventDefault();
 
             //Selection de l'element à supprimer en fonction de son id ET sa couleur
-            let idDelete = produitLocalStorage[j].idProduit;
-            let colorDelete = produitLocalStorage[j].couleurProduit;
+            let idDelete = produitLocalStorage[k].idProduit;
+            let colorDelete = produitLocalStorage[k].couleurProduit;
 
-            produitLocalStorage = produitLocalStorage.filter(el => el.idProduit !== idDelete || el.couleurProduit !== colorDelete);
+            produitLocalStorage = produitLocalStorage.filter(condition => condition.idProduit !== idDelete || condition.couleurProduit !== colorDelete);
 
             localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
 
@@ -234,8 +235,9 @@ function formulaireInitialisation() {
 }
 formulaireInitialisation();
 
+
 //Envoi des informations client au localstorage
-function postForm() {
+
     const bouttonCommander = document.getElementById("order");
 
     //Ecouter le panier
@@ -291,8 +293,8 @@ function postForm() {
                 alert("Problème avec fetch : " + err.message);
             });
     })
-}
-postForm();
+
+
 
 
 
